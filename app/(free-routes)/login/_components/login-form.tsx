@@ -23,6 +23,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { cn, errors } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { ModeToggle } from '@/components/toggle-theme';
 
 const formSchema = z.object({
 	username: z
@@ -59,7 +60,8 @@ export function LoginForm({
 	}
 
 	return (
-		<div className={cn("flex flex-col gap-6", className)} {...props}>
+		<div className={cn("flex flex-col gap-6 relative", className)} {...props}>
+			<ModeToggle className='z-50 absolute right-2 top-2' />
 			<Card className='dark:bg-muted bg-background'>
 				<CardHeader>
 					<CardTitle className="text-2xl">Login</CardTitle>

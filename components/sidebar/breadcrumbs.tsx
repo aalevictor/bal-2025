@@ -6,7 +6,7 @@ import { House } from "lucide-react";
 
 export default function Breadcrumbs() {
     const pathname = usePathname();
-    const segments = pathname === "/" ? [] : pathname.split("/");
+    const segments = pathname === "/" ? [""] : pathname.split("/");
 
     function composeURL(segments: string[], index: number) {
         const url = segments.slice(0, index + 1).join("/");
