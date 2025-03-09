@@ -16,7 +16,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
-import Link from "@/components/new-link"
+import Link from "@/components/link"
 
 export function NavMain({
   items,
