@@ -72,7 +72,7 @@ export function LoginForm({
 						<form
 							onSubmit={form.handleSubmit(onSubmit)}
 						>
-							<div className="flex flex-col gap-2">
+							<div className="flex flex-col gap-6">
 								<div className="grid gap-2">
 									<FormField
 										control={form.control}
