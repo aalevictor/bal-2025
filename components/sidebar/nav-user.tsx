@@ -21,19 +21,14 @@ import {
 	useSidebar,
 } from '@/components/ui/sidebar';
 import { signOut, useSession } from 'next-auth/react';
-// import { useRouter } from "next/navigation";
 
 export function NavUser() {
 	const { isMobile } = useSidebar();
-	// const router = useRouter();
 	const session = useSession();
 
 	function abreviaNome(nome: string): string {
 		const nomes = nome.split(' ');
-		return `${nomes[0].substring(0, 1)}${nomes[nomes.length - 1].substring(
-			0,
-			1,
-		)}`;
+		return `${nomes[0].substring(0, 1)}${nomes[nomes.length - 1].substring(0, 1)}`;
 	}
 
 	function reduzNome(nome: string): string {
@@ -52,7 +47,7 @@ export function NavUser() {
 						<DropdownMenuTrigger asChild>
 							<SidebarMenuButton
 								size='lg'
-								className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'>
+								className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer'>
 								<Avatar className='h-8 w-8 rounded-full aspect-square'>
 									<AvatarImage src={session.data.user.avatar} />
 									<AvatarFallback className='rounded-full'>

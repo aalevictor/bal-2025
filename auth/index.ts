@@ -14,7 +14,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({providers: [
       async authorize(credentials) {
         if (credentials?.username && credentials?.password) {
           const { username, password } = credentials;
-          const user = await prisma.user.findUnique({ where: { username: username.toString(), active: true } });
+          const user = await prisma.user.findUnique({ where: { username: username.toString(), active: true }, include: { permissions: true } });
           if (user){
             const passwordMatch = await compare(password.toString(), user.password);
             if (passwordMatch) return {
@@ -24,7 +24,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({providers: [
               firstName: user.firstName,
               lastName: user.lastName,
               avatar: user.avatar,
-              active: user.active
+              active: user.active,
+              permissions: user.permissions
             };
           }
         }
@@ -38,7 +39,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({providers: [
       return token;
     },
     async session({ session, token }) {
-      session.user = token.user as any;
+      if (token.user) {
+        const user = token.user as any;
+        const userData = await prisma.user.findUnique({ where: { id: user.id }, include: { permissions: true }});
+        if (userData) {
+          session.user = {
+            ...user,
+            permissions: userData.permissions,
+            avatar: userData.avatar,
+            active: userData.active
+          }
+        }
+      }
       return session;
     },
   },

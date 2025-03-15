@@ -1,8 +1,8 @@
 'use client'
 
 import { usePathname } from "next/navigation";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb";
-import { House } from "lucide-react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "../ui/breadcrumb";
+import { ChevronRight, House } from "lucide-react";
 
 export default function Breadcrumbs() {
     const pathname = usePathname();
@@ -15,15 +15,15 @@ export default function Breadcrumbs() {
     return (
         <Breadcrumb>
             <BreadcrumbList>
-                {segments.length > 0 && segments.map((segment, index) => (<>
+                {segments.length > 0 && segments.map((segment, index) => (
                     <BreadcrumbItem key={index}>
                         {index < segments.length - 1 ? 
-                            <BreadcrumbLink href={`${composeURL(segments, index)}`}>{index === 0 ? <House className="size-4" /> : segment}</BreadcrumbLink> :
-                            <BreadcrumbPage>{index === 0 ? <House className="size-4" /> : segment}</BreadcrumbPage>
+                            <BreadcrumbLink href={`${composeURL(segments, index)}`}>{index === 0 ? <House className="size-4" /> : <p className="capitalize">{segment}</p>}</BreadcrumbLink> :
+                            <BreadcrumbPage>{index === 0 ? <House className="size-4" /> : <p className="capitalize">{segment}</p>}</BreadcrumbPage>
                         }
+                        {index < segments.length - 1 && <ChevronRight className="size-3" />}
                     </BreadcrumbItem>
-                    {index < segments.length - 1  && <BreadcrumbSeparator key={`${index}-separator`} />}
-                </>))}
+                ))}
             </BreadcrumbList>
         </Breadcrumb>
     )

@@ -1,3 +1,4 @@
+import { Permission } from "@prisma/client"
 import NextAuth, { DefaultSession } from "next-auth"
 
 declare module "next-auth" {
@@ -10,6 +11,7 @@ declare module "next-auth" {
         lastName: string
         avatar: string | undefined
         active: boolean
+        permissions: Permission[]
     } & DefaultSession["user"]
   }
 }

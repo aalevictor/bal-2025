@@ -18,18 +18,13 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-
-const data = {
-  navMain: [
-    {
-      title: "Usuários",
-      url: "/users",
-      icon: Users,
-    },
-  ]
-}
+import { useSession } from "next-auth/react"
+import { menu } from "./menu"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: session } = useSession()
+  const user = session?.user;
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -49,7 +44,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={menu} userPermissions={user?.permissions || []} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

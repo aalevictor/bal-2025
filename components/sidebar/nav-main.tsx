@@ -17,27 +17,21 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import Link from "@/components/link"
+import { Permission } from "@prisma/client"
+import { menuItem } from "./menu"
 
 export function NavMain({
-  items,
+  items, userPermissions
 }: {
-  items: {
-    title: string
-    url: string
-    icon: LucideIcon
-    isActive?: boolean
-    items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+  items: menuItem[],
+  userPermissions: Permission[]
 }) {
   return (
     items && items.length > 0 && <SidebarGroup>
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
+          (!item.permission || item.permission === "" || userPermissions.find((permission) => permission.name === item.permission)) && <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
               <Link href={item.url}>
                 <item.icon />
